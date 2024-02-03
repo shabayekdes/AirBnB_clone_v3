@@ -16,10 +16,12 @@ def teardown_appcontext(exception):
     '''Status of your API'''
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     '''return render_template'''
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST', '0.0.0.0')
