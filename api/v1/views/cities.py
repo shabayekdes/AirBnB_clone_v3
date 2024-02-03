@@ -23,6 +23,13 @@ def get_cities(state_id):
         return jsonify(cities)
 
     if request.method == 'POST':
+        states = storage.all('State')
+        fetch_string = "{}.{}".format('State', state_id)
+        state = states.get(fetch_string)
+
+        if state is None:
+            abort(404)
+
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in request.get_json():
