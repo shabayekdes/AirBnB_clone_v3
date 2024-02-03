@@ -7,6 +7,7 @@ from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states/', methods=['GET', 'POST'], strict_slashes=False)
 def get_states(state_id=None):
     """
@@ -21,7 +22,7 @@ def get_states(state_id=None):
         for state in storage.all("State").values():
             states.append(state.to_dict())
         return jsonify(states)
-    
+
     if request.method == 'POST':
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -31,7 +32,9 @@ def get_states(state_id=None):
         new_state.save()
         return make_response(jsonify(new_state.to_dict()), 201)
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def get_state(state_id):
     """
         states route to handle http methods for requested state
