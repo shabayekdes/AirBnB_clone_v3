@@ -9,13 +9,11 @@ from models.state import State
 
 
 @app_views.route('/states/', methods=['GET', 'POST'], strict_slashes=False)
-def get_states(state_id=None):
+def get_states():
     """
         states route to handle http method for requested state/s
     """
     states = storage.all('State')
-    fetch_string = "{}.{}".format('State', state_id)
-    state = states.get(fetch_string)
 
     if request.method == 'GET':
         states = []
