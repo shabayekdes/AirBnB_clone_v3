@@ -40,7 +40,6 @@ def get_amenity(amenity_id):
     amenities = storage.all('Amenity')
     fetch_string = "{}.{}".format('Amenity', amenity_id)
     amenity = amenities.get(fetch_string)
-
     if amenity is None:
         abort(404)
 
