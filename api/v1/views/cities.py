@@ -14,22 +14,20 @@ def get_cities(state_id):
     """
         cities route to handle http method for requested city/s
     """
-    cities = storage.all('City')
+    states = storage.all('State')
+    fetch_string = "{}.{}".format('State', state_id)
+    state = states.get(fetch_string)
+
+    if state is None:
+        abort(404)
 
     if request.method == 'GET':
         cities = []
-        for city in storage.all("City").values():
+        for city in state.cities:
             cities.append(city.to_dict())
         return jsonify(cities)
 
     if request.method == 'POST':
-        states = storage.all('State')
-        fetch_string = "{}.{}".format('State', state_id)
-        state = states.get(fetch_string)
-
-        if state is None:
-            abort(404)
-
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in request.get_json():
