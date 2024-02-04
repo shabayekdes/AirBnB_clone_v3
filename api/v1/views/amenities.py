@@ -13,11 +13,10 @@ def get_amenities():
     """
         states route to handle http method for requested state/s
     """
-    amenities = storage.all('Amenity')
 
     if request.method == 'GET':
         amenities = []
-        for amenity in amenities:
+        for amenity in storage.all('Amenity').values():
             amenities.append(amenity.to_dict())
         return jsonify(amenities)
 
