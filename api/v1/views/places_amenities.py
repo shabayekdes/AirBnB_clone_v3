@@ -10,8 +10,8 @@ from os import getenv
 
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
-    @app_views.route('/places/<place_id>/amenities/', methods=['GET', 'POST'],
-                    strict_slashes=False)
+    @app_views.route('/places/<place_id>/amenities/', methods=['GET'],
+                     strict_slashes=False)
     def get_amenities_by_place(place_id):
         """
             amenities route to handle http method for requested amenity/s
@@ -31,7 +31,6 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                         amenities.append(amenity.to_dict())
                     return jsonify(amenities)
 
-
     @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                      methods=['POST', 'DELETE'])
     def create_place_amenity(place_id, amenity_id):
@@ -44,7 +43,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
 
         if place is None or amenity is None:
             abort(404)
-        
+
         if request.method == 'POST':
             amenities = []
             for place_obj in places:
@@ -56,7 +55,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                             amenities.append(amenity.to_dict())
                             return jsonify(amenities[0]), 200
             return jsonify(amenities[0]), 201
-        
+
         if request.method == 'DELETE':
             for place_obj in places:
                 if place_obj.id == place_id:
