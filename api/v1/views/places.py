@@ -40,6 +40,7 @@ def get_places(city_id):
         user = users.get(fetch_string)
         if user is None:
             abort(404)
+        kwargs['city_id'] = city_id
         new_place = Place(**kwargs)
         new_place.save()
         return make_response(jsonify(new_place.to_dict()), 201)
