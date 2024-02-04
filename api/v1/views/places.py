@@ -18,9 +18,8 @@ def get_places(city_id):
     fetch_string = "{}.{}".format('City', city_id)
     city = cities.get(fetch_string)
 
-    print(city)
     if city is None:
-        abort(401)
+        abort(404)
 
     if request.method == 'GET':
         places = []
