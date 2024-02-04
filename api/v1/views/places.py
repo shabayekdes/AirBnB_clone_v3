@@ -8,7 +8,8 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places/', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places/', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def get_places(city_id):
     """
         states route to handle http method for requested state/s
@@ -64,7 +65,8 @@ def get_place(place_id):
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for key, value in request.get_json().items():
-            if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+            if key not in ['id', 'created_at', 'updated_at',
+                           'user_id', 'city_id']:
                 setattr(place, key, value)
         place.save()
         return jsonify(place.to_dict())
