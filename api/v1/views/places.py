@@ -34,7 +34,13 @@ def get_places(city_id):
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
         if 'name' not in request.get_json():
             return make_response(jsonify({'error': 'Missing name'}), 400)
-        new_place = Place(**request.get_json())
+        kwargs = request.get_json()
+        users = storage.all('User')
+        fetch_string = "{}.{}".format('User', kwargs['user_id'])
+        user = users.get(fetch_string)
+        if user is None:
+            abort(404)
+        new_place = Place(**kwargs)
         new_place.save()
         return make_response(jsonify(new_place.to_dict()), 201)
 
