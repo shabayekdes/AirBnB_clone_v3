@@ -19,7 +19,7 @@ def get_reviews(place_id):
     place = places.get(fetch_string)
 
     if place is None:
-        abort(401)
+        abort(404)
 
     if request.method == 'GET':
         reviews = []
